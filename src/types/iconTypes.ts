@@ -1,3 +1,8 @@
+export type IconProps = {
+  color: string;
+  size: number;
+};
+
 export type TransactionProps = {
   id: 1;
   account_receiver: string;

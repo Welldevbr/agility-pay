@@ -1,39 +1,38 @@
-'use client';
+"use client";
+import { useState } from "react";
+import Image from "next/image";
+import { Button } from "..";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { Button } from '..';
-
-import { CloseIcon } from '..';
-import Transfer from '@/assets/transfer.svg';
-import useModalContext from '@/contexts/modalContext';
-import { string, z } from 'zod';
-import { api } from '@/services/api';
-import { toast } from 'react-toastify';
-import { AxiosError } from 'axios';
-import { formatToReais } from '@/utils/formatToReais';
-import { useStore } from '@/store/app.store';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import ReactLoad from 'react-loading';
-import Cookie from 'js-cookie';
+import { CloseIcon } from "..";
+import Transfer from "@/assets/transfer.svg";
+import useModalContext from "@/contexts/modalContext";
+import { string, z } from "zod";
+import { api } from "@/services/api";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { formatToReais } from "@/utils/formatToReais";
+import { useStore } from "@/store/app.store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import ReactLoad from "react-loading";
+import Cookie from "js-cookie";
 
 const schema = z.object({
   value: string(),
-  pix: string().min(1, 'Chave obrigatória!'),
-  description: string().min(1, 'Descrição obrigatória!'),
+  pix: string().min(1, "Chave obrigatória!"),
+  description: string().min(1, "Descrição obrigatória!"),
 });
 
 const initialData = {
-  value: '',
-  pix: '',
-  description: '',
+  value: "",
+  pix: "",
+  description: "",
 };
 
 export function TransactionModal() {
   const [loading, setLoading] = useState(false);
   const { balance, setReload } = useStore();
-  const token = Cookie.get('auth_token');
+  const token = Cookie.get("auth_token");
 
   const { setActive } = useModalContext();
 
@@ -52,7 +51,7 @@ export function TransactionModal() {
       setLoading(true);
 
       await api.post(
-        '/createTransaction',
+        "/createTransaction",
         {
           key: data.pix,
           value: data.value,
@@ -66,7 +65,7 @@ export function TransactionModal() {
       );
 
       setReload(true);
-      toast.success('Transferência realizada com sucesso.');
+      toast.success("Transferência realizada com sucesso.");
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
 
@@ -77,9 +76,9 @@ export function TransactionModal() {
     }
   }
 
-  const value = watch('value');
-  const pix = watch('pix');
-  const description = watch('description');
+  const value = watch("value");
+  const pix = watch("pix");
+  const description = watch("description");
 
   return (
     <div className="w-screen absolute z-50 flex -translate-x-1/2 left-1/2 -translate-y-1/2 top-1/2 items-center justify-center h-screen bg-black/60 backdrop-blur">
@@ -102,7 +101,7 @@ export function TransactionModal() {
               type="text"
               className="rounded-lg w-full h-14 bg-[#1C1924] text-white outline-none transition-all ease-in-out duration-300 focus:outline-2 focus:outline-indigo-500 rounded-2  px-4 mt-1 placeholder:font-normal placeholder:text-sm"
               placeholder="Digite aqui"
-              {...register('value')}
+              {...register("value")}
             />
             <p className="text-light font-normal text-sm mt-2">
               Saldo: {formatToReais(Number(balance.balance))}
@@ -135,7 +134,7 @@ export function TransactionModal() {
                 type="text"
                 className="rounded-lg w-full h-14 bg-[#1C1924] text-white outline-none transition-all ease-in-out duration-300 focus:outline-2 focus:outline-indigo-500 rounded-2  px-4 mt-1 placeholder:font-normal placeholder:text-sm"
                 placeholder="Digite aqui"
-                {...register('pix')}
+                {...register("pix")}
               />
 
               {errors.pix && (
@@ -154,7 +153,7 @@ export function TransactionModal() {
                 type="text"
                 className="rounded-lg w-full h-14 bg-[#1C1924] text-white outline-none transition-all ease-in-out duration-300 focus:outline-2 focus:outline-indigo-500 rounded-2  px-4 mt-1 placeholder:font-normal placeholder:text-sm"
                 placeholder="Digite aqui"
-                {...register('description')}
+                {...register("description")}
               />
 
               {errors.description && (
@@ -169,7 +168,7 @@ export function TransactionModal() {
           <Button
             type="submit"
             className="mt-8"
-            disabled={value === '' || pix === '' || description === ''}
+            disabled={value === "" || pix === "" || description === ""}
           >
             {loading ? (
               <ReactLoad
@@ -179,7 +178,7 @@ export function TransactionModal() {
                 height={32}
               />
             ) : (
-              'Realizar Transferência'
+              "Realizar Transferência"
             )}
           </Button>
         </form>

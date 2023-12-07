@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import Cookie from 'js-cookie';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Cookie from "js-cookie";
+import { toast } from "react-toastify";
 
-import Logo from '@/assets/logo.svg';
-import { Button } from '@/components';
-import { api } from '@/services/api';
-import { AxiosError } from 'axios';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { string, z } from 'zod';
-import ReactLoad from 'react-loading';
+import Logo from "@/assets/logo.svg";
+import { Button } from "@/components";
+import { api } from "@/services/api";
+import { AxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { string, z } from "zod";
+import ReactLoad from "react-loading";
 
 const schema = z.object({
-  email: string().email('E-mail obrigatório!'),
-  senha: string().min(1, 'Senha obrigatória!'),
+  email: string().email("E-mail obrigatório!"),
+  senha: string().min(1, "Senha obrigatória!"),
 });
 
 const initialData = {
-  email: '',
-  senha: '',
+  email: "",
+  senha: "",
 };
 
 export default function Home() {
@@ -42,25 +42,25 @@ export default function Home() {
   async function handleLogin(data: any) {
     try {
       setLoading(true);
-      const res = await api.post('/login', {
+      const res = await api.post("/login", {
         email: data.email,
         password: data.senha,
       });
 
-      Cookie.set('auth_token', res.data.data.token, { expires: 7 });
-      router.push('/dashboard');
-      toast.success('Bem-vindo ao Agility Pay');
+      Cookie.set("auth_token", res.data.data.token, { expires: 7 });
+      router.push("/dashboard");
+      toast.success("Bem-vindo ao Agility Pay");
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
 
-      return toast.error(`${err.response?.data.message}`);
+      // return toast.error(`${err.response?.data.message}`);
     } finally {
       setLoading(false);
     }
   }
 
-  const login = watch('email');
-  const senha = watch('senha');
+  const login = watch("email");
+  const senha = watch("senha");
 
   return (
     <section className="w-full flex justify-center">
@@ -84,7 +84,7 @@ export default function Home() {
                 type="text"
                 className="rounded-lg w-full h-14 bg-[#1C1924] text-white outline-none transition-all ease-in-out duration-300 focus:outline-2 focus:outline-indigo-500 rounded-2  px-4 mt-1 placeholder:font-normal placeholder:text-sm"
                 placeholder="Digite seu e-mail"
-                {...register('email')}
+                {...register("email")}
               />
               {errors.email && (
                 <div className="flex items-center gap-1 mt-2">
@@ -102,7 +102,7 @@ export default function Home() {
                 type="password"
                 className="rounded-lg w-full h-14 bg-[#1C1924] text-white outline-none transition-all ease-in-out duration-300 focus:outline-2 focus:outline-indigo-500 rounded-2  px-4 mt-1 placeholder:font-normal placeholder:text-sm"
                 placeholder="Digite sua senha"
-                {...register('senha')}
+                {...register("senha")}
               />
               {errors.senha && (
                 <div className="flex items-center gap-1 mt-2">
@@ -114,7 +114,7 @@ export default function Home() {
             </div>
           </div>
 
-          <Button type="submit" disabled={login === '' || senha === ''}>
+          <Button type="submit" disabled={login === "" || senha === ""}>
             {loading ? (
               <ReactLoad
                 type="bubbles"
@@ -123,14 +123,14 @@ export default function Home() {
                 height={32}
               />
             ) : (
-              'Acessar'
+              "Acessar"
             )}
           </Button>
         </form>
         <button
           type="button"
           className="w-full text-white hover:text-purple-normal transition ease-in-out duration-300"
-          onClick={() => router.push('/register')}
+          onClick={() => router.push("/register")}
         >
           Cadastre-se
         </button>

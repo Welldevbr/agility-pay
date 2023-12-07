@@ -5,7 +5,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 
 import Logo from "@/assets/logo.svg";
-import { Button } from "@/components";
+import { Button } from "@/components/Button";
 import { api } from "@/services/api";
 import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
