@@ -1,6 +1,8 @@
 export type IconProps = {
   color: string;
-  size: number;
+  width: string;
+  height: string;
+  className: string;
 };
 
 export type TransactionProps = {
