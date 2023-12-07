@@ -1,4 +1,9 @@
-import { IconProps } from "@/types/iconTypes";
+type IconProps = {
+  color?: string;
+  width?: string;
+  height?: string;
+  className?: string;
+};
 
 export function LogoutIcon({
   color = "#fff",

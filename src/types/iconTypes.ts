@@ -1,10 +1,3 @@
-export type IconProps = {
-  color: string;
-  width: string;
-  height: string;
-  className: string;
-};
-
 export type TransactionProps = {
   id: 1;
   account_receiver: string;
